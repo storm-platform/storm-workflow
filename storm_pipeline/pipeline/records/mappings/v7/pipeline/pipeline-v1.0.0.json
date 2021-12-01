@@ -1,0 +1,103 @@
+{
+  "mappings": {
+    "date_detection": false,
+    "numeric_detection": false,
+    "properties": {
+      "id": {
+        "type": "keyword"
+      },
+      "access": {
+        "properties": {
+          "owned_by": {
+            "properties": {
+              "user": {
+                "type": "keyword"
+              }
+            }
+          },
+          "contributed_by": {
+            "properties": {
+              "user": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      "metadata": {
+        "properties": {
+          "title": {
+            "type": "text"
+          },
+          "description": {
+            "type": "text"
+          },
+          "version": {
+            "type": "text"
+          }
+        }
+      },
+      "graph": {
+        "properties": {
+          "directed": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "text"
+          },
+          "nodes": {
+            "properties": {
+              "metadata": {
+                "properties": {
+                  "files": {
+                    "properties": {
+                      "type": {
+                        "type": "text"
+                      },
+                      "key": {
+                        "type": "text"
+                      },
+                      "checksum": {
+                        "type": "text"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "edges": {
+            "properties": {
+              "source": {
+                "type": "text"
+              },
+              "target": {
+                "type": "text"
+              },
+              "metadata": {
+                "properties": {
+                  "related_files": {
+                    "properties": {
+                      "key": {
+                        "type": "text"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "created": {
+        "type": "date"
+      },
+      "updated": {
+        "type": "date"
+      },
+      "is_finished": {
+        "type": "boolean"
+      }
+    }
+  }
+}

@@ -5,9 +5,7 @@
 # storm-pipeline is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
-"""Pipeline manager module for the Storm platform."""
+from .api import create_research_pipeline_blueprint_api
 
-from .ext import StormPipeline
-from .version import __version__
 
-__all__ = ("__version__", "StormPipeline")
+__all__ = "create_research_pipeline_blueprint_api"
