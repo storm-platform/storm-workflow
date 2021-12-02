@@ -42,3 +42,5 @@ class ResearchPipelineRecordPermissionPolicy(RecordPermissionPolicy):
     can_delete = can_manage
 
     can_search = can_use
+
+    can_manage_compendium = can_manage

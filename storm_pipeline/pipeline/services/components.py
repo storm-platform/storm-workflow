@@ -8,6 +8,9 @@
 
 import re
 
+from pydash import py_
+
+from typing import Dict, List
 from marshmallow import ValidationError
 from invenio_records.dictutils import dict_set
 
@@ -15,6 +18,9 @@ from invenio_access.permissions import system_process
 
 from invenio_pidstore.errors import PIDAlreadyExists
 from invenio_records_resources.services.records.components import ServiceComponent
+
+from storm_graph import graph_json_from_manager, graph_manager_from_json
+from storm_graph.models import Vertex
 
 
 class PIDComponent(ServiceComponent):
@@ -116,4 +122,98 @@ class GraphComponent(ServiceComponent):
         record.graph = {}
 
 
-__all__ = ("PIDComponent", "GraphComponent", "ResearchPipelineAccessComponent")
+class CompendiaComponent(ServiceComponent):
+    """Service component for compendia manipulation."""
+
+    def _prepare_file_metadata(
+        self, identity, files_definition: List, path: str, type_: str, rec_id: str
+    ) -> Dict:
+        """Prepare file as vertex metadata.
+
+        Args:
+            files_definition (list): List with the files definition (e.g., {"inputs": ["key": "file.txt"]}).
+
+            path (str): Path from where the data to prepare will be extracted (e.g., inputs, metadata.inputs).
+
+            type_ (str): data type (e.g., input, output)
+
+            rec_id (str): Compendium Record id.
+        Returns:
+            Dict: Dictionary with the files metadata prepared to be used in the graph metadata.
+        """
+        from storm_compendium import current_compendium_service
+
+        return (
+            py_.chain(files_definition)
+            .get(path)
+            .map(
+                lambda file: {
+                    **file,
+                    "type": type_,
+                    "checksum": (
+                        py_.get(
+                            current_compendium_service.files.read_file_metadata(
+                                rec_id, file.get("key"), identity
+                            ).data,
+                            "checksum",
+                        ).replace("md5:", "")
+                    ),
+                }
+            )
+            .value()
+        )
+
+    def _generate_metadata_vertex(self, identity, record):
+        """Create a metadata vertex from a record.
+
+        Args:
+            identity (flask_principal.Identity): User identity
+
+            record (invenio_record.Record): Record
+
+        Returns:
+            storm_graph.models.Vertex: Created metadata vertex.
+        """
+        record_files_definition = py_.get(record.data, "metadata.execution.data")
+
+        # creating the vertex object
+        record_files = py_.concat(
+            self._prepare_file_metadata(
+                identity, record_files_definition, "inputs", "input", record.id
+            ),
+            self._prepare_file_metadata(
+                identity, record_files_definition, "outputs", "output", record.id
+            ),
+        )
+
+        return Vertex(name=record.id, files=record_files)
+
+    def add_compendium(self, identity, record=None, pipeline_record=None, **kwargs):
+        """Add a new compendium in the research pipeline graph."""
+
+        # creating the record.
+        vertex = self._generate_metadata_vertex(identity, record)
+
+        # adding the vertex to the graph.
+        graph_manager = graph_manager_from_json({"graph": pipeline_record.get("graph")})
+        graph_manager.add_vertex(vertex)
+
+        # saving the updated graph.
+        pipeline_record.update(graph_json_from_manager(graph_manager))
+
+    def delete_compendium(self, identity, record=None, pipeline_record=None, **kwargs):
+        """Remove a compendium from the graph (including its dependent neighbors)."""
+
+        graph_manager = graph_manager_from_json({"graph": pipeline_record.get("graph")})
+        graph_manager.delete_vertex(record.id)
+
+        # saving the updated graph.
+        pipeline_record.update(graph_json_from_manager(graph_manager))
+
+
+__all__ = (
+    "PIDComponent",
+    "GraphComponent",
+    "CompendiaComponent",
+    "ResearchPipelineAccessComponent",
+)

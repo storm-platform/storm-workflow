@@ -5,9 +5,14 @@
 # storm-pipeline is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
-from flask_resources import route
+from flask import g
 
-from invenio_records_resources.resources.records.resource import RecordResource
+from flask_resources import route, response_handler, resource_requestctx
+
+from invenio_records_resources.resources.records.resource import (
+    RecordResource,
+    request_view_args,
+)
 
 
 class ResearchPipelineResource(RecordResource):
@@ -25,11 +30,33 @@ class ResearchPipelineResource(RecordResource):
             route("PUT", routes["update-item"], self.update),
             route("DELETE", routes["delete-item"], self.delete),
             # Graph manipulation operations
-            # route("POST", routes["add-graph-item"], self.delete),
-            # route("POST", routes["delete-graph-item"], self.delete),
+            route("POST", routes["add-graph-item"], self.add_compendium),
+            route("DELETE", routes["delete-graph-item"], self.delete_compendium),
         ]
 
         return url_rules
+
+    @request_view_args
+    @response_handler()
+    def add_compendium(self):
+        """Read an item."""
+        added_compendium = self.service.add_compendium(
+            g.identity,
+            resource_requestctx.view_args["pid_value"],
+            resource_requestctx.view_args["compendium_id"],
+        )
+
+        return added_compendium.to_dict(), 200
+
+    @request_view_args
+    def delete_compendium(self):
+        """Read an item."""
+        self.service.delete_compendium(
+            g.identity,
+            resource_requestctx.view_args["pid_value"],
+            resource_requestctx.view_args["compendium_id"],
+        )
+        return "", 204
 
 
 __all__ = "ResearchPipelineResource"

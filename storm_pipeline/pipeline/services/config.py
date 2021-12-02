@@ -13,7 +13,12 @@ from ..records.api import ResearchPipeline
 from ..schema import ResearchPipelineSchema
 
 from .permissions import ResearchPipelineRecordPermissionPolicy
-from .components import PIDComponent, ResearchPipelineAccessComponent, GraphComponent
+from .components import (
+    PIDComponent,
+    ResearchPipelineAccessComponent,
+    GraphComponent,
+    CompendiaComponent,
+)
 
 
 class ResearchPipelineServiceConfig(RecordServiceConfig):
@@ -37,6 +42,7 @@ class ResearchPipelineServiceConfig(RecordServiceConfig):
     components = [
         MetadataComponent,
         GraphComponent,
+        CompendiaComponent,
         PIDComponent,
         ResearchPipelineAccessComponent,
     ]
