@@ -195,7 +195,9 @@ class CompendiaComponent(ServiceComponent):
         vertex = self._generate_metadata_vertex(identity, record)
 
         # adding the vertex to the graph.
-        graph_manager = graph_manager_from_json({"graph": pipeline_record.get("graph")})
+        graph_manager = graph_manager_from_json(
+            {"graph": pipeline_record.get("graph")}, validate=False
+        )
         graph_manager.add_vertex(vertex)
 
         # saving the updated graph.
@@ -204,7 +206,9 @@ class CompendiaComponent(ServiceComponent):
     def delete_compendium(self, identity, record=None, pipeline_record=None, **kwargs):
         """Remove a compendium from the graph (including its dependent neighbors)."""
 
-        graph_manager = graph_manager_from_json({"graph": pipeline_record.get("graph")})
+        graph_manager = graph_manager_from_json(
+            {"graph": pipeline_record.get("graph")}, validate=False
+        )
         graph_manager.delete_vertex(record.id)
 
         # saving the updated graph.
