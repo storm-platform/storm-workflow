@@ -9,7 +9,7 @@
 ===============
 
 .. image:: https://img.shields.io/badge/license-MIT-green
-        :target: https://github.com/storm-platform/storm-project/blob/master/LICENSE
+        :target: https://github.com/storm-platform/storm-pipeline/blob/master/LICENSE
         :alt: Software License
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
