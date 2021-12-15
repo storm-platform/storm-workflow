@@ -15,20 +15,25 @@
       "$ref": "local://definitions-v1.0.0.json#/internal-pid"
     },
     "access": {
-      "owned_by": {
-        "description": "List of project owners",
-        "type": "array",
-        "uniqueItems": true,
-        "items": {
-          "$ref": "local://project/definitions-v1.0.0.json#/agent"
-        }
-      },
-      "contributed_by": {
-        "description": "List of project users",
-        "type": "array",
-        "uniqueItems": true,
-        "items": {
-          "$ref": "local://project/definitions-v1.0.0.json#/agent"
+      "description": "Resource access information",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "owned_by": {
+          "description": "List of record owners",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "local://project/definitions-v1.0.0.json#/agent"
+          }
+        },
+        "contributed_by": {
+          "description": "List of record contributors",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "local://project/definitions-v1.0.0.json#/agent"
+          }
         }
       }
     },

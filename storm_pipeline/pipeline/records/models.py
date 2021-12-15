@@ -12,7 +12,7 @@ from invenio_records.models import RecordMetadataBase
 class ResearchPipelineMetadata(db.Model, RecordMetadataBase):
     """Research pipeline database model."""
 
-    __tablename__ = "pipeline_research_pipeline"
+    __tablename__ = "pipeline_research_pipelines"
 
     # Enables SQLAlchemy-Continuum versioning
     __version__ = {}
