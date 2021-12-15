@@ -5,9 +5,7 @@
 # storm-pipeline is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
-
 import marshmallow as ma
-
 
 from invenio_records_resources.resources import RecordResourceConfig
 
@@ -15,7 +13,7 @@ from invenio_records_resources.resources import RecordResourceConfig
 class ResearchPipelineResourceConfig(RecordResourceConfig):
     """Research Pipeline resource configuration."""
 
-    blueprint_name = "storm_pipeline_records"
+    blueprint_name = "storm_research_pipelines"
     url_prefix = "/projects/<project_id>/pipelines"
 
     request_view_args = {"pid_value": ma.fields.Str(), "compendium_id": ma.fields.Str()}

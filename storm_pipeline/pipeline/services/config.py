@@ -6,18 +6,23 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 
 from invenio_records_resources.services import RecordServiceConfig
-from invenio_records_resources.services.records.components import MetadataComponent
 
+from storm_commons.services.components import (
+    CustomPIDGeneratorComponent,
+    RecordMetadataComponent,
+    RecordAccessDefinitionComponent,
+)
 
-from ..records.api import ResearchPipeline
-from ..schema import ResearchPipelineSchema
+from storm_pipeline.pipeline.records.api import ResearchPipeline
+from storm_pipeline.pipeline.schema import ResearchPipelineSchema
 
-from .permissions import ResearchPipelineRecordPermissionPolicy
-from .components import (
-    PIDComponent,
-    ResearchPipelineAccessComponent,
-    GraphComponent,
-    CompendiaComponent,
+from storm_pipeline.pipeline.services.components import (
+    ResearchPipelineGraphComponent,
+    ResearchPipelineCompendiaComponent,
+)
+
+from storm_pipeline.pipeline.services.security.permissions import (
+    ResearchPipelineRecordPermissionPolicy,
 )
 
 
@@ -40,11 +45,11 @@ class ResearchPipelineServiceConfig(RecordServiceConfig):
     # Components configuration
     #
     components = [
-        MetadataComponent,
-        GraphComponent,
-        CompendiaComponent,
-        PIDComponent,
-        ResearchPipelineAccessComponent,
+        RecordMetadataComponent,
+        ResearchPipelineGraphComponent,
+        ResearchPipelineCompendiaComponent,
+        CustomPIDGeneratorComponent,
+        RecordAccessDefinitionComponent,
     ]
 
 

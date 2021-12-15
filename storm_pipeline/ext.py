@@ -7,12 +7,12 @@
 
 """Pipeline manager module for the Storm platform."""
 
-from . import config
+import storm_pipeline.config as config
 
-from .pipeline.resources.config import ResearchPipelineResourceConfig
-from .pipeline.resources.resource import ResearchPipelineResource
-from .pipeline.services.config import ResearchPipelineServiceConfig
-from .pipeline.services.service import ResearchPipelineService
+from storm_pipeline.pipeline.resources.config import ResearchPipelineResourceConfig
+from storm_pipeline.pipeline.resources.resource import ResearchPipelineResource
+from storm_pipeline.pipeline.services.config import ResearchPipelineServiceConfig
+from storm_pipeline.pipeline.services.service import ResearchPipelineService
 
 
 class StormPipeline(object):
