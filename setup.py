@@ -18,29 +18,11 @@ tests_require = [
     "pytest-invenio>=1.4.0",
 ]
 
-invenio_db_version = ">=1.0.9,<2.0.0"
-invenio_search_version = ">=1.4.2,<2.0.0"
-
-
 extras_require = {
     "docs": [
         "Sphinx>=3,<4",
     ],
     "tests": tests_require,
-    # Elasticsearch
-    "elasticsearch7": [
-        f"invenio-search[elasticsearch7]{invenio_search_version}",
-    ],
-    # Databases
-    "mysql": [
-        f"invenio-db[mysql,versioning]{invenio_db_version}",
-    ],
-    "postgresql": [
-        f"invenio-db[postgresql,versioning]{invenio_db_version}",
-    ],
-    "sqlite": [
-        f"invenio-db[versioning]{invenio_db_version}",
-    ],
 }
 
 extras_require["all"] = [req for _, reqs in extras_require.items() for req in reqs]
@@ -48,9 +30,7 @@ extras_require["all"] = [req for _, reqs in extras_require.items() for req in re
 setup_requires = []
 
 install_requires = [
-    "invenio-drafts-resources>=0.14.0,<0.15.0",
-    "invenio-records-resources>=0.17.0,<0.18",
-    "storm-project @ git+https://github.com/storm-platform/storm-project",
+    "storm-compendium @ git+https://github.com/storm-platform/storm-compendium@main",
 ]
 
 packages = find_packages()
