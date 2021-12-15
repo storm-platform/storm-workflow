@@ -31,6 +31,7 @@ setup_requires = []
 
 install_requires = [
     "storm-compendium @ git+https://github.com/storm-platform/storm-compendium@main",
+    "storm-graph @ git+https://github.com/storm-platform/storm-graph@main",
 ]
 
 packages = find_packages()
