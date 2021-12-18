@@ -26,6 +26,7 @@ class StormPipeline(object):
     def init_app(self, app):
         """Flask application initialization."""
         self.init_config(app)
+
         self.init_services(app)
         self.init_resources(app)
 
