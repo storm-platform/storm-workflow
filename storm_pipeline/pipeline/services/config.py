@@ -6,21 +6,23 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 
 from invenio_records_resources.services import RecordServiceConfig
-
 from storm_commons.services.components import (
     CustomPIDGeneratorComponent,
     RecordMetadataComponent,
     RecordAccessDefinitionComponent,
+    FinishStatusComponent,
+)
+from storm_project.project.services.links import (
+    ProjectContextLink,
+    project_context_pagination_links,
 )
 
 from storm_pipeline.pipeline.records.api import ResearchPipeline
 from storm_pipeline.pipeline.schema import ResearchPipelineSchema
-
 from storm_pipeline.pipeline.services.components import (
     ResearchPipelineGraphComponent,
     ResearchPipelineCompendiaComponent,
 )
-
 from storm_pipeline.pipeline.services.security.permissions import (
     ResearchPipelineRecordPermissionPolicy,
 )
@@ -50,7 +52,12 @@ class ResearchPipelineServiceConfig(RecordServiceConfig):
         ResearchPipelineCompendiaComponent,
         CustomPIDGeneratorComponent,
         RecordAccessDefinitionComponent,
+        FinishStatusComponent,
     ]
 
-
-__all__ = "ResearchPipelineServiceConfig"
+    links_item = {
+        "self": ProjectContextLink("{+api}/projects/{project_id}/pipelines/{id}")
+    }
+    links_search = project_context_pagination_links(
+        "{+api}/projects/{project_id}/pipelines{?args*}"
+    )
