@@ -5,13 +5,13 @@
 # storm-pipeline is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
-from storm_commons.records.providers import RegisteredIdProvider
+from storm_commons.records.providers import PIDRegisteredProvider
 
 
-class ResearchPipelineIdProvider(RegisteredIdProvider):
+class ResearchPipelinePIDProvider(PIDRegisteredProvider):
     """Research pipeline PID provider."""
 
     pid_type = "pipeid"
 
 
-__all__ = "ResearchPipelineIdProvider"
+__all__ = "ResearchPipelinePIDProvider"

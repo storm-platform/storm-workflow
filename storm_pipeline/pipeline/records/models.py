@@ -16,6 +16,3 @@ class ResearchPipelineMetadata(db.Model, RecordMetadataBase):
 
     # Enables SQLAlchemy-Continuum versioning
     __version__ = {}
-
-
-__all__ = "ResearchPipelineMetadata"
