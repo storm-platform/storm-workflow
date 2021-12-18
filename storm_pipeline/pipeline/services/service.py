@@ -36,15 +36,14 @@ class ResearchPipelineService(RecordService):
         Note:
             The transformation is done based on the components linked to the service.
         """
+        # load pipeline record
+        pipeline_record = self.record_cls.pid.resolve(pipeline_id)
 
         # checking permissions
-        self.require_permission(identity, "manage_compendium")
+        self.require_permission(identity, "manage_compendium", record=pipeline_record)
 
         # read record and files definitions
         record = current_compendium_service.read(rec_id, identity)
-
-        # load pipeline record
-        pipeline_record = self.record_cls.pid.resolve(pipeline_id)
 
         self.run_components(
             component_action,
@@ -97,5 +96,34 @@ class ResearchPipelineService(RecordService):
             identity, pipeline_id, rec_id, "delete_compendium", uow
         )
 
+    @unit_of_work()
+    def finish_pipeline(self, identity, pipeline_id, uow=None):
+        """Finish a research pipeline.
 
-__all__ = "ResearchPipelineService"
+        Args:
+            identity (flask_principal.Identity): User identity
+
+            pipeline_id (str): Research Pipeline id
+
+        Returns:
+            Dict: The updated Research Pipeline document.
+        """
+        # load pipeline record
+        pipeline_record = self.record_cls.pid.resolve(pipeline_id)
+
+        # checking permissions
+        self.require_permission(identity, "finish", record=pipeline_record)
+
+        self.run_components(
+            "finish",
+            identity,
+            record=pipeline_record,
+            uow=uow,
+        )
+
+        # Persist record (DB and index)
+        uow.register(RecordCommitOp(pipeline_record, self.indexer))
+
+        return self.result_item(
+            self, identity, pipeline_record, links_tpl=self.links_item_tpl
+        )

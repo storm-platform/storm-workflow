@@ -6,13 +6,11 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 
 from flask import g
-
 from flask_resources import route, response_handler, resource_requestctx
 
-from invenio_records_resources.resources.records.resource import (
-    RecordResource,
-    request_view_args,
-)
+from invenio_records_resources.resources.records.resource import RecordResource
+
+from storm_commons.resources.parsers import request_view_args
 
 
 class ResearchPipelineResource(RecordResource):
@@ -32,6 +30,8 @@ class ResearchPipelineResource(RecordResource):
             # Graph manipulation operations
             route("POST", routes["add-graph-item"], self.add_compendium),
             route("DELETE", routes["delete-graph-item"], self.delete_compendium),
+            # Status control
+            route("POST", routes["finish-item"], self.finish_pipeline),
         ]
 
         return url_rules
@@ -40,23 +40,31 @@ class ResearchPipelineResource(RecordResource):
     @response_handler()
     def add_compendium(self):
         """Read an item."""
-        added_compendium = self.service.add_compendium(
+        compendium = self.service.add_compendium(
             g.identity,
             resource_requestctx.view_args["pid_value"],
             resource_requestctx.view_args["compendium_id"],
         )
 
-        return added_compendium.to_dict(), 200
+        return compendium.to_dict(), 200
 
     @request_view_args
+    @response_handler()
     def delete_compendium(self):
-        """Read an item."""
-        self.service.delete_compendium(
+        """delete a compendium node from the pipeline."""
+        compendium = self.service.delete_compendium(
             g.identity,
             resource_requestctx.view_args["pid_value"],
             resource_requestctx.view_args["compendium_id"],
         )
-        return "", 204
+        return compendium.to_dict(), 200
 
-
-__all__ = "ResearchPipelineResource"
+    @request_view_args
+    @response_handler()
+    def finish_pipeline(self):
+        """Finish a research compendium."""
+        compendium = self.service.finish_pipeline(
+            g.identity,
+            resource_requestctx.view_args["pid_value"],
+        )
+        return compendium.to_dict(), 200

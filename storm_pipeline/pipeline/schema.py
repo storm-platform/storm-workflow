@@ -90,6 +90,8 @@ class GraphSchema(Schema):
 class ResearchPipelineSchema(BaseRecordSchema):
     """Research pipeline schema."""
 
-    id = SanitizedUnicode(validate=marshmallow_not_blank_field(max=20), required=True)
+    id = SanitizedUnicode(validate=marshmallow_not_blank_field(max=64), required=True)
     graph = fields.Nested(GraphSchema)
     metadata = fields.Nested(ResearchPipelineMetadataSchema, required=True)
+
+    is_finished = fields.Boolean(dump_only=True)

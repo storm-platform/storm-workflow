@@ -13,13 +13,13 @@ from invenio_records.systemfields import ConstantField, DictField
 
 from storm_pipeline.pipeline.records.models import ResearchPipelineMetadata
 from storm_pipeline.pipeline.records.systemfields.access import PipelineAccess
-from storm_pipeline.pipeline.records.providers import ResearchPipelineIdProvider
+from storm_pipeline.pipeline.records.providers import ResearchPipelinePIDProvider
 
 
 class ResearchPipeline(Record):
     """Research Pipeline High-level API."""
 
-    pid = PIDField("id", provider=ResearchPipelineIdProvider, create=False)
+    pid = PIDField("id", provider=ResearchPipelinePIDProvider, create=False)
     schema = ConstantField("$schema", "local://pipeline/pipeline-v1.0.0.json")
 
     access = RecordAccessField(access_obj_class=PipelineAccess)
@@ -27,8 +27,5 @@ class ResearchPipeline(Record):
     model_cls = ResearchPipelineMetadata
     index = IndexField("pipeline-pipeline-v1.0.0", search_alias="pipeline")
 
-    is_finished = DictField("is_finished")
     graph = DictField(clear_none=True, create_if_missing=True)
-
-
-__all__ = "ResearchPipeline"
+    is_finished = DictField("is_finished", create_if_missing=True)

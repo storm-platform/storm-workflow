@@ -117,9 +117,3 @@ class ResearchPipelineCompendiaComponent(ServiceComponent):
 
         # saving the updated graph.
         pipeline_record.update(graph_json_from_manager(graph_manager))
-
-
-__all__ = (
-    "ResearchPipelineGraphComponent",
-    "ResearchPipelineCompendiaComponent",
-)

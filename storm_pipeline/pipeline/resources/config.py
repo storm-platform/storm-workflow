@@ -28,7 +28,6 @@ class ResearchPipelineResourceConfig(RecordResourceConfig):
         # Graph manipulation operations
         "add-graph-item": "/<pid_value>/actions/add/compendium/<compendium_id>",
         "delete-graph-item": "/<pid_value>/actions/delete/compendium/<compendium_id>",
+        # Status control
+        "finish-item": "/<pid_value>/actions/finish",
     }
-
-
-__all__ = "ResearchPipelineResourceConfig"
