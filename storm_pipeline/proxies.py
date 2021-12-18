@@ -14,3 +14,9 @@ current_pipeline_extension = LocalProxy(
     lambda: current_app.extensions["storm-pipeline"]
 )
 """Helper proxy to get the current Storm Pipeline extension."""
+
+
+current_pipeline_service = LocalProxy(
+    lambda: current_app.extensions["storm-pipeline"].research_pipeline_service
+)
+"""Helper proxy to get the current Storm Pipeline service extension."""
