@@ -60,5 +60,6 @@ class ResearchPipelineRecordPermissionPolicy(RecordPermissionPolicy):
     can_update = can_manage
     can_delete = can_manage
     can_finish = can_manage
+    can_manage_access = can_manage
 
     can_manage_compendium = can_manage

@@ -7,13 +7,13 @@
 
 from typing import Dict
 
+from storm_commons.admin.service import AdminRecordService
 from storm_compendium import current_compendium_service
 
-from invenio_records_resources.services.records import RecordService
 from invenio_records_resources.services.uow import RecordCommitOp, unit_of_work
 
 
-class ResearchPipelineService(RecordService):
+class ResearchPipelineService(AdminRecordService):
     """Research pipeline service."""
 
     def _transform_compendium(

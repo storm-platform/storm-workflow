@@ -8,12 +8,11 @@
 from flask import g
 from flask_resources import route, response_handler, resource_requestctx
 
-from invenio_records_resources.resources.records.resource import RecordResource
-
+from storm_commons.admin.resource import AdminRecordResource
 from storm_commons.resources.parsers import request_view_args
 
 
-class ResearchPipelineResource(RecordResource):
+class ResearchPipelineResource(AdminRecordResource):
     """Research pipeline API resource."""
 
     def create_url_rules(self):
@@ -32,6 +31,10 @@ class ResearchPipelineResource(RecordResource):
             route("DELETE", routes["delete-graph-item"], self.delete_compendium),
             # Status control
             route("POST", routes["finish-item"], self.finish_pipeline),
+            # Access control
+            route("POST", routes["add-item-agent"], self.admin_add_agent),
+            route("DELETE", routes["remove-item-agent"], self.admin_remove_agent),
+            route("GET", routes["list-item-agent"], self.admin_list_agents),
         ]
 
         return url_rules
