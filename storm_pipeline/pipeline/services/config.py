@@ -28,6 +28,11 @@ from storm_pipeline.pipeline.services.security.permissions import (
 )
 
 
+def is_not_finished(record, ctx):
+    """Check if the pipeline is not finished."""
+    return not record.is_finished
+
+
 class ResearchPipelineServiceConfig(RecordServiceConfig):
     """ResearchPipeline service configuration."""
 
@@ -58,6 +63,22 @@ class ResearchPipelineServiceConfig(RecordServiceConfig):
     links_item = {
         "self": ProjectContextLink("{+api}/projects/{project_id}/pipelines/{id}")
     }
+
+    links_action = {
+        "add-compendium": ProjectContextLink(
+            "{+api}/projects/{project_id}/pipelines/{id}/actions/add/compendium",
+            when=is_not_finished,
+        ),
+        "delete-compendium": ProjectContextLink(
+            "{+api}/projects/{project_id}/pipelines/{id}/actions/delete/compendium",
+            when=is_not_finished,
+        ),
+        "finish": ProjectContextLink(
+            "{+api}/projects/{project_id}/pipelines/{id}/actions/finish",
+            when=is_not_finished,
+        ),
+    }
+
     links_search = project_context_pagination_links(
         "{+api}/projects/{project_id}/pipelines{?args*}"
     )

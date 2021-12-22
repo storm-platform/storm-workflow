@@ -8,6 +8,7 @@
 from typing import Dict
 
 from storm_commons.admin.service import AdminRecordService
+from storm_commons.services.links import ActionLinksTemplate
 from storm_compendium import current_compendium_service
 
 from invenio_records_resources.services.uow import RecordCommitOp, unit_of_work
@@ -15,6 +16,11 @@ from invenio_records_resources.services.uow import RecordCommitOp, unit_of_work
 
 class ResearchPipelineService(AdminRecordService):
     """Research pipeline service."""
+
+    @property
+    def links_item_tpl(self):
+        """Item links template."""
+        return ActionLinksTemplate(self.config.links_item, self.config.links_action)
 
     def _transform_compendium(
         self, identity, pipeline_id, rec_id, component_action, uow=None
