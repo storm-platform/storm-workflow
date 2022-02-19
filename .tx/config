@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2021 Felipe Menino Carlos.
+# Copyright (C) 2021 Storm Project.
 #
-# storm-pipeline is free software; you can redistribute it and/or modify it
+# storm-workflow is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 # TODO: Transifex integration
@@ -25,8 +25,8 @@
 [main]
 host = https://www.transifex.com
 
-[invenio.storm-pipeline-messages]
-file_filter = storm_pipeline/translations/<lang>/LC_MESSAGES/messages.po
-source_file = storm_pipeline/translations/messages.pot
+[invenio.storm-workflow-messages]
+file_filter = storm_workflow/translations/<lang>/LC_MESSAGES/messages.po
+source_file = storm_workflow/translations/messages.pot
 source_lang = en
 type = PO

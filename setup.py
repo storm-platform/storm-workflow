@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2021 Felipe Menino Carlos.
+# Copyright (C) 2021 Storm Project.
 #
-# storm-pipeline is free software; you can redistribute it and/or modify it
+# storm-workflow is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
-"""Pipeline manager module for the Storm platform."""
+"""Workflow manager module for the Storm platform."""
 
 import os
 
@@ -39,45 +39,45 @@ packages = find_packages()
 
 # Get the version string. Cannot be done with import!
 g = {}
-with open(os.path.join("storm_pipeline", "version.py"), "rt") as fp:
+with open(os.path.join("storm_workflow", "version.py"), "rt") as fp:
     exec(fp.read(), g)
     version = g["__version__"]
 
 setup(
-    name="storm-pipeline",
+    name="storm-workflow",
     version=version,
     description=__doc__,
     long_description=readme + "\n\n" + history,
-    keywords=["Storm Platform", "Research pipelines", "Invenio module"],
+    keywords=["Storm Platform", "Research workflows", "Invenio module"],
     license="MIT",
     author="Felipe Menino Carlos",
     author_email="felipe.carlos@inpe.br",
-    url="https://github.com/storm-platform/storm-pipeline",
+    url="https://github.com/storm-platform/storm-workflow",
     packages=packages,
     zip_safe=False,
     include_package_data=True,
     platforms="any",
     entry_points={
         "invenio_config.module": [
-            "storm_pipeline = storm_pipeline.config",
+            "storm_workflow = storm_workflow.config",
         ],
         "invenio_base.apps": [
-            "storm_pipeline = storm_pipeline:StormPipeline",
+            "storm_workflow = storm_workflow:StormWorkflow",
         ],
         "invenio_base.api_apps": [
-            "storm_pipeline = storm_pipeline:StormPipeline",
+            "storm_workflow = storm_workflow:StormWorkflow",
         ],
         "invenio_base.api_blueprints": [
-            "storm_pipeline_api = storm_pipeline.views:create_research_pipeline_blueprint_api"
+            "storm_workflow_api = storm_workflow.views:create_research_workflow_blueprint_api"
         ],
         "invenio_db.models": [
-            "pipeline_record = storm_pipeline.pipeline.records.models"
+            "workflow_record = storm_workflow.workflow.records.models"
         ],
         "invenio_search.mappings": [
-            "pipeline = storm_pipeline.pipeline.records.mappings"
+            "workflow = storm_workflow.workflow.records.mappings"
         ],
         "invenio_jsonschemas.schemas": [
-            "pipeline = storm_pipeline.pipeline.records.jsonschemas"
+            "workflow = storm_workflow.workflow.records.jsonschemas"
         ]
         # 'invenio_access.actions': [],
         # 'invenio_admin.actions': [],
