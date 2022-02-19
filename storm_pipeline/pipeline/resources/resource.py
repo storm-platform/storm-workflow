@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2021 Storm Project.
 #
-# storm-pipeline is free software; you can redistribute it and/or modify it
+# storm-workflow is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 from flask import g
@@ -12,8 +12,8 @@ from storm_commons.admin.resource import AdminRecordResource
 from storm_commons.resources.parsers import request_view_args
 
 
-class ResearchPipelineResource(AdminRecordResource):
-    """Research pipeline API resource."""
+class ResearchWorkflowResource(AdminRecordResource):
+    """Research workflow API resource."""
 
     def create_url_rules(self):
         """Routing for the views."""
@@ -30,7 +30,7 @@ class ResearchPipelineResource(AdminRecordResource):
             route("POST", routes["add-graph-item"], self.add_compendium),
             route("DELETE", routes["delete-graph-item"], self.delete_compendium),
             # Status control
-            route("POST", routes["finish-item"], self.finish_pipeline),
+            route("POST", routes["finish-item"], self.finish_workflow),
             # Access control
             route("POST", routes["add-item-agent"], self.admin_add_agent),
             route("DELETE", routes["remove-item-agent"], self.admin_remove_agent),
@@ -54,7 +54,7 @@ class ResearchPipelineResource(AdminRecordResource):
     @request_view_args
     @response_handler()
     def delete_compendium(self):
-        """delete a compendium node from the pipeline."""
+        """delete a compendium node from the workflow."""
         compendium = self.service.delete_compendium(
             g.identity,
             resource_requestctx.view_args["pid_value"],
@@ -64,9 +64,9 @@ class ResearchPipelineResource(AdminRecordResource):
 
     @request_view_args
     @response_handler()
-    def finish_pipeline(self):
+    def finish_workflow(self):
         """Finish a research compendium."""
-        compendium = self.service.finish_pipeline(
+        compendium = self.service.finish_workflow(
             g.identity,
             resource_requestctx.view_args["pid_value"],
         )

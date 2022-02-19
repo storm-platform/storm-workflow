@@ -2,21 +2,21 @@
 #
 # Copyright (C) 2021 Storm Project.
 #
-# storm-pipeline is free software; you can redistribute it and/or modify it
+# storm-workflow is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
-"""Pipeline manager module for the Storm platform."""
+"""Workflow manager module for the Storm platform."""
 
-import storm_pipeline.config as config
+import storm_workflow.config as config
 
-from storm_pipeline.pipeline.resources.config import ResearchPipelineResourceConfig
-from storm_pipeline.pipeline.resources.resource import ResearchPipelineResource
-from storm_pipeline.pipeline.services.config import ResearchPipelineServiceConfig
-from storm_pipeline.pipeline.services.service import ResearchPipelineService
+from storm_workflow.workflow.resources.config import ResearchWorkflowResourceConfig
+from storm_workflow.workflow.resources.resource import ResearchWorkflowResource
+from storm_workflow.workflow.services.config import ResearchWorkflowServiceConfig
+from storm_workflow.workflow.services.service import ResearchWorkflowService
 
 
-class StormPipeline(object):
-    """storm-pipeline extension."""
+class StormWorkflow(object):
+    """storm-workflow extension."""
 
     def __init__(self, app=None):
         """Extension initialization."""
@@ -30,22 +30,22 @@ class StormPipeline(object):
         self.init_services(app)
         self.init_resources(app)
 
-        app.extensions["storm-pipeline"] = self
+        app.extensions["storm-workflow"] = self
 
     def init_config(self, app):
         """Initialize configuration."""
         for k in dir(config):
-            if k.startswith("STORM_PIPELINE_"):
+            if k.startswith("STORM_WORKFLOW_"):
                 app.config.setdefault(k, getattr(config, k))
 
     def init_services(self, app):
-        """Initialize research pipeline services."""
-        self.research_pipeline_service = ResearchPipelineService(
-            ResearchPipelineServiceConfig
+        """Initialize research workflow services."""
+        self.research_workflow_service = ResearchWorkflowService(
+            ResearchWorkflowServiceConfig
         )
 
     def init_resources(self, app):
-        """Initialize research pipeline resources."""
-        self.research_pipeline_resource = ResearchPipelineResource(
-            ResearchPipelineResourceConfig, self.research_pipeline_service
+        """Initialize research workflow resources."""
+        self.research_workflow_resource = ResearchWorkflowResource(
+            ResearchWorkflowResourceConfig, self.research_workflow_service
         )

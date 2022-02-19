@@ -2,16 +2,16 @@
 #
 # Copyright (C) 2021 Storm Project.
 #
-# storm-pipeline is free software; you can redistribute it and/or modify it
+# storm-workflow is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
-from .api import ResearchPipeline
-from .models import ResearchPipelineMetadata
+from .api import ResearchWorkflow
+from .models import ResearchWorkflowMetadata
 
-from .providers import ResearchPipelinePIDProvider
+from .providers import ResearchWorkflowPIDProvider
 
 __all__ = (
-    "ResearchPipeline",
-    "ResearchPipelineMetadata",
-    "ResearchPipelinePIDProvider",
+    "ResearchWorkflow",
+    "ResearchWorkflowMetadata",
+    "ResearchWorkflowPIDProvider",
 )

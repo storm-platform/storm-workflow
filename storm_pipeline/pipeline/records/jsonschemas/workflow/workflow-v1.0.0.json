@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "id": "local://pipeline/pipeline-v1.0.0.json",
-  "title": "Storm Pipeline Schema v1.0.0",
+  "id": "local://workflow/workflow-v1.0.0.json",
+  "title": "Storm Workflow Schema v1.0.0",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -62,7 +62,7 @@
     },
     "graph": {
       "type": "object",
-      "description": "Pipeline graph.",
+      "description": "Workflow graph.",
       "additionalProperties": false,
       "properties": {
         "directed": {
@@ -88,7 +88,7 @@
                     "description": "List of files available in the node.",
                     "type": "array",
                     "items": {
-                      "$ref": "local://pipeline/definitions-v1.0.0.json#/nodeFile"
+                      "$ref": "local://workflow/definitions-v1.0.0.json#/nodeFile"
                     }
                   }
                 }

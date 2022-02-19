@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2021 Storm Project.
 #
-# storm-pipeline is free software; you can redistribute it and/or modify it
+# storm-workflow is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 from invenio_records_resources.records.api import Record
@@ -11,21 +11,21 @@ from invenio_records_resources.records.systemfields import IndexField, PIDField
 
 from invenio_records.systemfields import ConstantField, DictField
 
-from storm_pipeline.pipeline.records.models import ResearchPipelineMetadata
-from storm_pipeline.pipeline.records.systemfields.access import PipelineAccess
-from storm_pipeline.pipeline.records.providers import ResearchPipelinePIDProvider
+from storm_workflow.workflow.records.models import ResearchWorkflowMetadata
+from storm_workflow.workflow.records.systemfields.access import WorkflowAccess
+from storm_workflow.workflow.records.providers import ResearchWorkflowPIDProvider
 
 
-class ResearchPipeline(Record):
-    """Research Pipeline High-level API."""
+class ResearchWorkflow(Record):
+    """Research Workflow High-level API."""
 
-    pid = PIDField("id", provider=ResearchPipelinePIDProvider, create=False)
-    schema = ConstantField("$schema", "local://pipeline/pipeline-v1.0.0.json")
+    pid = PIDField("id", provider=ResearchWorkflowPIDProvider, create=False)
+    schema = ConstantField("$schema", "local://workflow/workflow-v1.0.0.json")
 
-    access = RecordAccessField(access_obj_class=PipelineAccess)
+    access = RecordAccessField(access_obj_class=WorkflowAccess)
 
-    model_cls = ResearchPipelineMetadata
-    index = IndexField("pipeline-pipeline-v1.0.0", search_alias="pipeline")
+    model_cls = ResearchWorkflowMetadata
+    index = IndexField("workflow-workflow-v1.0.0", search_alias="workflow")
 
     graph = DictField(clear_none=True, create_if_missing=True)
     is_finished = DictField("is_finished", create_if_missing=True)

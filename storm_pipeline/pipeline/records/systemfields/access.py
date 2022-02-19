@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2021 Storm Project.
 #
-# storm-pipeline is free software; you can redistribute it and/or modify it
+# storm-workflow is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 from invenio_accounts.models import User as InvenioUser
@@ -14,8 +14,8 @@ from storm_commons.records.systemfields.models import Agent, AgentList
 from storm_commons.records.systemfields.fields.access import RecordAccess
 
 
-class PipelineAgent(Agent):
-    """Pipeline access agent."""
+class WorkflowAgent(Agent):
+    """Workflow access agent."""
 
     #
     # Supported types
@@ -31,14 +31,14 @@ class PipelineAgent(Agent):
     }
 
 
-class PipelineAgents(AgentList):
-    """A list of Pipeline Agents."""
+class WorkflowAgents(AgentList):
+    """A list of Workflow Agents."""
 
-    agent_cls = PipelineAgent
+    agent_cls = WorkflowAgent
 
 
-class PipelineAccess(RecordAccess):
-    """Pipeline access management."""
+class WorkflowAccess(RecordAccess):
+    """Workflow access management."""
 
-    owners_cls = PipelineAgents
-    contributors_cls = PipelineAgents
+    owners_cls = WorkflowAgents
+    contributors_cls = WorkflowAgents

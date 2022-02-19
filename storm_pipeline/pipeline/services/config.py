@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2021 Storm Project.
 #
-# storm-pipeline is free software; you can redistribute it and/or modify it
+# storm-workflow is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 from invenio_records_resources.services import RecordServiceConfig
@@ -17,68 +17,68 @@ from storm_project.project.services.links import (
     project_context_pagination_links,
 )
 
-from storm_pipeline.pipeline.records.api import ResearchPipeline
-from storm_pipeline.pipeline.schema import ResearchPipelineSchema
-from storm_pipeline.pipeline.services.components import (
-    ResearchPipelineGraphComponent,
-    ResearchPipelineCompendiaComponent,
+from storm_workflow.workflow.records.api import ResearchWorkflow
+from storm_workflow.workflow.schema import ResearchWorkflowSchema
+from storm_workflow.workflow.services.components import (
+    ResearchWorkflowGraphComponent,
+    ResearchWorkflowCompendiaComponent,
 )
-from storm_pipeline.pipeline.services.security.permissions import (
-    ResearchPipelineRecordPermissionPolicy,
+from storm_workflow.workflow.services.security.permissions import (
+    ResearchWorkflowRecordPermissionPolicy,
 )
 
 
 def is_not_finished(record, ctx):
-    """Check if the pipeline is not finished."""
+    """Check if the workflow is not finished."""
     return not record.is_finished
 
 
-class ResearchPipelineServiceConfig(RecordServiceConfig):
-    """ResearchPipeline service configuration."""
+class ResearchWorkflowServiceConfig(RecordServiceConfig):
+    """ResearchWorkflow service configuration."""
 
     #
     # Common configurations
     #
-    permission_policy_cls = ResearchPipelineRecordPermissionPolicy
+    permission_policy_cls = ResearchWorkflowRecordPermissionPolicy
 
     #
     # Record configuration
     #
-    record_cls = ResearchPipeline
+    record_cls = ResearchWorkflow
 
-    schema = ResearchPipelineSchema
+    schema = ResearchWorkflowSchema
 
     #
     # Components configuration
     #
     components = [
         RecordMetadataComponent,
-        ResearchPipelineGraphComponent,
-        ResearchPipelineCompendiaComponent,
+        ResearchWorkflowGraphComponent,
+        ResearchWorkflowCompendiaComponent,
         CustomPIDGeneratorComponent,
         RecordAccessDefinitionComponent,
         FinishStatusComponent,
     ]
 
     links_item = {
-        "self": ProjectContextLink("{+api}/projects/{project_id}/pipelines/{id}")
+        "self": ProjectContextLink("{+api}/projects/{project_id}/workflows/{id}")
     }
 
     links_action = {
         "add-compendium": ProjectContextLink(
-            "{+api}/projects/{project_id}/pipelines/{id}/actions/add/compendium",
+            "{+api}/projects/{project_id}/workflows/{id}/actions/add/compendium",
             when=is_not_finished,
         ),
         "delete-compendium": ProjectContextLink(
-            "{+api}/projects/{project_id}/pipelines/{id}/actions/delete/compendium",
+            "{+api}/projects/{project_id}/workflows/{id}/actions/delete/compendium",
             when=is_not_finished,
         ),
         "finish": ProjectContextLink(
-            "{+api}/projects/{project_id}/pipelines/{id}/actions/finish",
+            "{+api}/projects/{project_id}/workflows/{id}/actions/finish",
             when=is_not_finished,
         ),
     }
 
     links_search = project_context_pagination_links(
-        "{+api}/projects/{project_id}/pipelines{?args*}"
+        "{+api}/projects/{project_id}/workflows{?args*}"
     )

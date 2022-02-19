@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2021 Storm Project.
 #
-# storm-pipeline is free software; you can redistribute it and/or modify it
+# storm-workflow is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 from marshmallow import fields, Schema
@@ -13,9 +13,9 @@ from invenio_records_resources.services.records.schema import BaseRecordSchema
 
 
 #
-# Research Pipeline general metadata
+# Research Workflow general metadata
 #
-class ResearchPipelineMetadataSchema(Schema):
+class ResearchWorkflowMetadataSchema(Schema):
     """Research project metadata field schema."""
 
     # General descriptions
@@ -27,7 +27,7 @@ class ResearchPipelineMetadataSchema(Schema):
 
 
 #
-# Research Pipeline graph metadata
+# Research Workflow graph metadata
 #
 class NodeFileSchema(Schema):
     """Node File schema."""
@@ -87,11 +87,11 @@ class GraphSchema(Schema):
     edges = fields.List(cls_or_instance=fields.Nested(EdgeSchema()), required=True)
 
 
-class ResearchPipelineSchema(BaseRecordSchema):
-    """Research pipeline schema."""
+class ResearchWorkflowSchema(BaseRecordSchema):
+    """Research workflow schema."""
 
     id = SanitizedUnicode(validate=marshmallow_not_blank_field(max=64), required=True)
     graph = fields.Nested(GraphSchema, required=True, dump_only=True)
-    metadata = fields.Nested(ResearchPipelineMetadataSchema, required=True)
+    metadata = fields.Nested(ResearchWorkflowMetadataSchema, required=True)
 
     is_finished = fields.Boolean(dump_only=True)

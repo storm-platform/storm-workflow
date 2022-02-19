@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2021 Storm Project.
 #
-# storm-pipeline is free software; you can redistribute it and/or modify it
+# storm-workflow is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 from invenio_access import superuser_access
@@ -14,20 +14,20 @@ from storm_project.project.services.security.generators import (
     ProjectRecordUser,
 )
 
-from storm_pipeline.pipeline.services.security.generators import (
-    PipelineRecordCollaborator,
+from storm_workflow.workflow.services.security.generators import (
+    WorkflowRecordCollaborator,
 )
 
 
-class ResearchPipelineRecordPermissionPolicy(RecordPermissionPolicy):
-    """Access control configuration for research pipelines."""
+class ResearchWorkflowRecordPermissionPolicy(RecordPermissionPolicy):
+    """Access control configuration for research workflows."""
 
     #
     # High level permissions
     #
 
     # Content creators and managers
-    can_colaborate = [PipelineRecordCollaborator(), SystemProcess()]
+    can_colaborate = [WorkflowRecordCollaborator(), SystemProcess()]
 
     # General users
     can_use = can_colaborate + [ProjectRecordUser(use_parent_access=False)]

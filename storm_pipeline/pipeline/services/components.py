@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2021 Storm Project.
 #
-# storm-pipeline is free software; you can redistribute it and/or modify it
+# storm-workflow is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 from pydash import py_
@@ -14,7 +14,7 @@ from storm_graph import graph_json_from_manager, graph_manager_from_json
 from invenio_records_resources.services.records.components import ServiceComponent
 
 
-class ResearchPipelineGraphComponent(ServiceComponent):
+class ResearchWorkflowGraphComponent(ServiceComponent):
     """Service component for graph."""
 
     def create(self, identity, data=None, record=None, errors=None, **kwargs):
@@ -22,7 +22,7 @@ class ResearchPipelineGraphComponent(ServiceComponent):
         record.graph = {}
 
 
-class ResearchPipelineCompendiaComponent(ServiceComponent):
+class ResearchWorkflowCompendiaComponent(ServiceComponent):
     """Service component for compendia manipulation."""
 
     def _prepare_file_metadata(
@@ -92,28 +92,28 @@ class ResearchPipelineCompendiaComponent(ServiceComponent):
 
         return Vertex(name=record.id, files=record_files)
 
-    def add_compendium(self, identity, record=None, pipeline_record=None, **kwargs):
-        """Add a new compendium in the research pipeline graph."""
+    def add_compendium(self, identity, record=None, workflow_record=None, **kwargs):
+        """Add a new compendium in the research workflow graph."""
 
         # creating the record.
         vertex = self._generate_metadata_vertex(identity, record)
 
         # adding the vertex to the graph.
         graph_manager = graph_manager_from_json(
-            {"graph": pipeline_record.get("graph")}, validate=False
+            {"graph": workflow_record.get("graph")}, validate=False
         )
         graph_manager.add_vertex(vertex)
 
         # saving the updated graph.
-        pipeline_record.update(graph_json_from_manager(graph_manager))
+        workflow_record.update(graph_json_from_manager(graph_manager))
 
-    def delete_compendium(self, identity, record=None, pipeline_record=None, **kwargs):
+    def delete_compendium(self, identity, record=None, workflow_record=None, **kwargs):
         """Remove a compendium from the graph (including its dependent neighbors)."""
 
         graph_manager = graph_manager_from_json(
-            {"graph": pipeline_record.get("graph")}, validate=False
+            {"graph": workflow_record.get("graph")}, validate=False
         )
         graph_manager.delete_vertex(record.id)
 
         # saving the updated graph.
-        pipeline_record.update(graph_json_from_manager(graph_manager))
+        workflow_record.update(graph_json_from_manager(graph_manager))
