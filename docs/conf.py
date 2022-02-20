@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2021 Felipe Menino Carlos.
+# Copyright (C) 2021 Storm Project.
 #
-# storm-pipeline is free software; you can redistribute it and/or modify it
+# storm-workflow is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Sphinx configuration."""
@@ -45,7 +45,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'storm-pipeline'
+project = u'storm-workflow'
 copyright = u'2021, Felipe Menino Carlos'
 author = u'Felipe Menino Carlos'
 
@@ -58,7 +58,7 @@ author = u'Felipe Menino Carlos'
 # Get the version string. Cannot be done with import!
 g = {}
 with open(os.path.join(os.path.dirname(__file__), '..',
-                       'storm_pipeline', 'version.py'),
+                       'storm_workflow', 'version.py'),
           'rt') as fp:
     exec(fp.read(), g)
     version = g['__version__']
@@ -115,15 +115,15 @@ todo_include_todos = False
 html_theme = 'alabaster'
 
 html_theme_options = {
-    'description': 'Pipeline manager module for the Storm platform',
+    'description': 'Workflow manager module for the Storm platform',
     'github_user': 'inveniosoftware',
-    'github_repo': 'storm-pipeline',
+    'github_repo': 'storm-workflow',
     'github_button': False,
     'github_banner': True,
     'show_powered_by': False,
     'extra_nav_links': {
-        'storm-pipeline@GitHub': 'https://github.com/storm-platform/storm-pipeline',
-        'storm-pipeline@PyPI': 'https://pypi.python.org/pypi/storm-pipeline/',
+        'storm-workflow@GitHub': 'https://github.com/storm-platform/storm-workflow',
+        'storm-workflow@PyPI': 'https://pypi.python.org/pypi/storm-workflow/',
     }
 }
 
@@ -228,7 +228,7 @@ html_sidebars = {
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'storm-pipeline_namedoc'
+htmlhelp_basename = 'storm-workflow_namedoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -250,7 +250,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'storm-pipeline.tex', u'storm-pipeline Documentation',
+    (master_doc, 'storm-workflow.tex', u'storm-workflow Documentation',
      u'Felipe Menino Carlos', 'manual'),
 ]
 
@@ -280,7 +280,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'storm-pipeline', u'storm-pipeline Documentation',
+    (master_doc, 'storm-workflow', u'storm-workflow Documentation',
      [author], 1)
 ]
 
@@ -294,8 +294,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'storm-pipeline', u'storm-pipeline Documentation',
-     author, 'storm-pipeline', 'Pipeline manager module for the Storm platform',
+    (master_doc, 'storm-workflow', u'storm-workflow Documentation',
+     author, 'storm-workflow', 'Workflow manager module for the Storm platform',
      'Miscellaneous'),
 ]
 

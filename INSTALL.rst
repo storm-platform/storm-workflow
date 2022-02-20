@@ -1,8 +1,8 @@
 Installation
 ============
 
-storm-pipeline is on PyPI so all you need is:
+storm-workflow is on PyPI so all you need is:
 
 .. code-block:: console
 
-   $ pip install storm-pipeline
+   $ pip install storm-workflow
