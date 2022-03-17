@@ -49,7 +49,7 @@ class ResearchWorkflowService(AdminRecordService):
         self.require_permission(identity, "manage_compendium", record=workflow_record)
 
         # read record and files definitions
-        record = current_compendium_service.read(rec_id, identity)
+        record = current_compendium_service.read(identity, rec_id)
 
         self.run_components(
             component_action,
