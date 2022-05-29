@@ -57,7 +57,7 @@ class ResearchWorkflowCompendiaComponent(ServiceComponent):
                     "checksum": (
                         py_.get(
                             current_compendium_service.files.read_file_metadata(
-                                identity, rec_id, file.get("key")
+                                rec_id, file.get("key"), identity
                             ).data,
                             "checksum",
                         ).replace("md5:", "")
